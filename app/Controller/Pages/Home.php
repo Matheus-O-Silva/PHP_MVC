@@ -13,8 +13,7 @@ class Home
          */
     public static function getHome()
     {
-        return 'Olá, Mundo!';
-        //return View::render('pages/home');
+        return View::render('pages/home');
     }
 }
 

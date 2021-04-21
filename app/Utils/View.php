@@ -1,6 +1,6 @@
 <?php
 
-namespace \App\Utils;
+namespace App\Utils;
 
 class View
 {
@@ -17,7 +17,7 @@ class View
     }
 
     /**
-     * Método responsável por retornar o conteúdo de uma view
+     * Método responsável por retornar o conteúdo renderizado de uma view
      * @param string $view
      * @param string
      */
