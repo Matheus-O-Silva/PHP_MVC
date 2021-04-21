@@ -33,7 +33,6 @@ class View
             return '{{'.$item.'}}';
         },$keys);
         
-        //echo '<pre>'; echo print_r($keys); echo '</pre>';
 
         //RETORNA O COTEÚDO RENDERIZADO
         return str_replace($keys, array_values($vars), $contentView);
