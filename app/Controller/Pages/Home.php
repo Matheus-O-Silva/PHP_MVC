@@ -3,6 +3,7 @@
 namespace App\Controller\Pages;
 
 use App\Utils\View;
+use \App\Model\Entity\Organization;
 
 class Home extends Page
 {
@@ -13,10 +14,15 @@ class Home extends Page
     */
     public static function getHome()
     {
+        //ORGANIZAÇÃO
+        $obOrganization = new Organization;
+
+
         //RETORNA A VIEW DA HOME
         $content = View::render('pages/home', [
-            'name' => 'Matheus',
-            'description' => 'Web Developer',
+            'name'         => $obOrganization->name,
+            'description'  => $obOrganization->description,
+            'site'         => $obOrganization->site
 
         ]);
         
