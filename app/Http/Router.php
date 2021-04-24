@@ -82,7 +82,7 @@ class Router
     }
 
     /**
-     * Método responsável por retornar a URI desonsiderando prefixo
+     * Método responsável por retornar a URI desonsiderando o prefixo
      * @return string
      */
     private function getUri()
@@ -113,7 +113,7 @@ class Router
         //VALIDA AS ROTAS
         foreach($this->routes as $patternRoute=>$methods)
         {
-            //VERIFICA SE A URI BATE O PADRÃO
+            //VERIFICA SE A ROTA BATE O PADRÃO
             if(preg_match($patternRoute,$uri))
             {
                 //VERIFICA O MÉTODO
@@ -188,6 +188,12 @@ class Router
             {
                 throw new Exception("A URL não pôde ser processada", 500);
             }
+
+            //ARGUMENTOS DA FUNÇÃO
+            $args = [];
+
+            //RETORNA A EXECUÇÃO DA FUNÇÃO
+            return call_user_func_array($route['controller'],$args);
 
         }catch(Exception $e)
                 {
