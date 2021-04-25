@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'd7cd8b928a08641852a37d5f3a081844c1b8a288',
+    'reference' => '2b2838c7a0bbadfddfc3b535b2e67e0b380bf0ee',
     'name' => 'php/mvc',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'd7cd8b928a08641852a37d5f3a081844c1b8a288',
+      'reference' => '2b2838c7a0bbadfddfc3b535b2e67e0b380bf0ee',
     ),
     'william-costa/dot-env' => 
     array (

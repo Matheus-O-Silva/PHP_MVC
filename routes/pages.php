@@ -19,7 +19,7 @@ $obRouter->GET('/sobre',[
     }
 ]);
 
-//ROTA DE DEPOIMENTOS
+//ROTA DEPOIMENTOS
 $obRouter->GET('/depoimentos',[
     function()
     {
