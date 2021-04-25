@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '2b2838c7a0bbadfddfc3b535b2e67e0b380bf0ee',
+    'reference' => '50273210247926eec3979aa076c3bd4c54eeb41a',
     'name' => 'php/mvc',
   ),
   'versions' => 
@@ -42,7 +42,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '2b2838c7a0bbadfddfc3b535b2e67e0b380bf0ee',
+      'reference' => '50273210247926eec3979aa076c3bd4c54eeb41a',
+    ),
+    'william-costa/database-manager' => 
+    array (
+      'pretty_version' => 'v0.1.0',
+      'version' => '0.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ed871363f27251a882b9e5dc036dcac566b271c4',
     ),
     'william-costa/dot-env' => 
     array (
