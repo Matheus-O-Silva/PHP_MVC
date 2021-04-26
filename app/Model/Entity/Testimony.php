@@ -2,6 +2,8 @@
 
 namespace App\Model\Entity;
 
+use \WilliamCosta\DatabaseManager\Database;
+
 class Testimony
 {
     /**
@@ -34,10 +36,35 @@ class Testimony
      */
     public function cadastrar()
     {
-        echo '<pre>';
-        print_r($this);
-        echo '</pre>';
-        exit;
+
+        //Configura horário de Brasília como horário padrão
+        date_default_timezone_set('America/Sao_Paulo');
+
+        //DEFINE A DATA
+        $this->data = date('Y-m-d H:i:s');
+
+        //INSERE O DEPOIMENTO NO BANCO DE DADOS
+        $this->id = (new Database('depoimentos'))->insert([
+            'nome' => $this->nome,
+            'mensagem' => $this->mensagem,
+            'data' => $this->data,
+        ]);
+        
+        //SUCESSO NO CADASTRO
+        return true;
+    }
+
+    /**
+     * Método resposável por retornar depoimentos
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string @field
+     * @return PDOstatement
+     */
+    public static function getTestimonies($where = null, $order = null,$limit = null, $fields = '*')
+    {
+        return(new Database('depoimentos'))->select($where,$order,$limit,$fields);
     }
 }
 
