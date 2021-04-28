@@ -11,6 +11,12 @@ class Queue
     private static $map = [];
 
     /**
+     * Mapeamento de middlewares que serão carregados em todas as rotas
+     * @var array
+     */
+    private static $default = [];
+
+    /**
      * Fila de middlewares a serem executados
      * @var array
      */
@@ -36,7 +42,7 @@ class Queue
     */
     public function __construct($middlewares,$controller,$controllerArgs)
     {
-        $this->middlewares    = $middlewares;
+        $this->middlewares    = array_merge(self::$default,$middlewares);        
         $this->controller     = $controller;
         $this->controllerArgs = $controllerArgs;
     }
@@ -48,6 +54,15 @@ class Queue
     public static function setMap($map)
     {
         self::$map = $map;
+    }
+
+    /**
+     * Método responsável por definir o mapeamento de middlewares padrões
+     * @param array $default
+     */
+    public static function setDefault($default)
+    {
+        self::$default = $default;
     }
 
     /**

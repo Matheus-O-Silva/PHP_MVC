@@ -33,6 +33,11 @@ MiddlewareQueue::setMap([
     'maintenance' => \App\Http\Middleware\Maintenance::class
 ]);
 
+//DEFINE O MAPEAMENTO DE MIDDLEWARES PADRÕES (EXECUTADOS EM TODAS AS ROTAS)
+MiddlewareQueue::setDefault([
+    'maintenance'
+]);
+
 
 
 ?>
