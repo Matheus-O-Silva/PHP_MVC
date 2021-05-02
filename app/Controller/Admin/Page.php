@@ -18,11 +18,11 @@ class Page
         ],
         'testimonies' => [
             'label' => 'Depoimentos',
-            'link' => URL.'/testimonies'
+            'link' => URL.'/admin/testimonies'
         ],
         'users' => [
             'label' => 'Usuários',
-            'link' => URL.'/user'
+            'link' => URL.'/admin/users'
         ]
     ];
 
@@ -84,6 +84,52 @@ class Page
 
         //RETORNA A PÁGINA RENDERIZADA
         return self::getPage($title,$contentPanel);
+    }
+
+    /**
+     * Método responsável por renderizar o layout de paginação
+     * @param Request $request
+     * @param Pagination $obPagination
+     * @return string
+     */
+    public static function getPagination($request,$obPagination)
+    {
+        //PÁGINAS
+        $pages = $obPagination->getPages();
+        
+        //VERIFICA A QUANTIDADE DE PÁGINAS
+        if(count($pages) <= 1) return '';
+
+        //LINKS
+        $links = '';
+
+        //URL ATUAL (SEM GETS)
+        $url = $request->getRouter()->getCurrentUrl();
+        
+        //GET
+        $queryParams = $request->getQueryParams();
+        
+        //RENDERIZA OS LINKS
+        foreach($pages as $page)
+        {
+            //ALTERA PÁGINA
+            $queryParams['page'] = $page['page'];
+
+            //LINK
+            $link = $url.'?'.http_build_query($queryParams);
+
+            //VIEW
+            $links .= View::render('admin/pagination/link', [
+                'page' => $page['page'],
+                'link' => $link,
+                'active' => $page['current'] ? 'active' : ''
+            ]);
+        }
+
+        //RENDERIZA BOX DE PAGINAÇÃO
+        return View::render('admin/pagination/box', [
+            'links' => $links
+        ]);
     }
 }
 
