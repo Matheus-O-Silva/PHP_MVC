@@ -74,6 +74,22 @@ class Testimony
     }
 
     /**
+     * Método responsável por exluir um depoimento do banco de dados
+     * @return boolean
+     */
+    public function excluir()
+    {
+
+        //Configura horário de Brasília como horário padrão
+        date_default_timezone_set('America/Sao_Paulo');
+
+
+        //EXCLUI O DEPOIMENTO DO BANCO DE DADOS
+        return (new Database('depoimentos'))->delete('id = '.$this->id);
+
+    }
+
+    /**
      * Método responsável por retornar um depoimento com base no seu ID
      * @param integer $id
      * @return Testimony

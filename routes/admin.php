@@ -9,4 +9,8 @@ include __DIR__.'/admin/login.php';
 //INCLUI AS ROTAS DE DEPOIMENTOS
 include __DIR__.'/admin/testimonies.php';
 
+//INCLUI AS ROTAS DE USUÁRIOS
+include __DIR__.'/admin/users.php';
+
+
 ?>

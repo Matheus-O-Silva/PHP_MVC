@@ -39,4 +39,17 @@ class User
     {
         return(new Database('usuarios'))->select('email = "'.$email.'"')->fetchObject(self::class);
     }
+
+    /**
+     * Método resposável por retornar usuários
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string @field
+     * @return PDOstatement
+     */
+    public static function getUsers($where = null, $order = null,$limit = null, $fields = '*')
+    {
+        return(new Database('usuarios'))->select($where,$order,$limit,$fields);
+    }
 }

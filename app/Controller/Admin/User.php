@@ -3,25 +3,26 @@
 namespace App\Controller\Admin;
 
 use \App\Utils\View;
-use \App\Model\Entity\Testimony as EntityTestimony;
+use \App\Model\Entity\User as EntityUser;
 use \WilliamCosta\DatabaseManager\Pagination;
 
-class Testimony extends Page
+class User extends Page
 {
+
     /**
-     * Mètodo responsável por obter a renderização dos itens de depoimentos para a página
+     * Mètodo responsável por obter a renderização dos itens de usuários para a página
      * @param Request $request
      * @param Pagination $obPagination
      * @return string
      */
-    private static function getTestimonyItems($request,&$obPagination)
+    private static function getUserItems($request,&$obPagination)
     {
-        //DEPOIMENTOS
+        //USUÁRIOS
         $itens = '';
 
         //QUANTIDADE TOTAL DE REGISTRO
-        $quantidadeTotal = EntityTestimony::getTestimonies(null,null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
-
+        $quantidadeTotal = EntityUser::getUsers(null,null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
+         
         //PÁGINA ATUAL
         $queryParams = $request->getQueryParams();
         $paginaAtual = $queryParams['page'] ?? 1;
@@ -30,17 +31,16 @@ class Testimony extends Page
         $obPagination = new Pagination($quantidadeTotal,$paginaAtual,5); 
 
         //RESULTADOS DA PÁGINA
-        $results = EntityTestimony::getTestimonies(null,'id DESC',$obPagination->getLimit());
+        $results = EntityUser::getUsers(null,'id DESC',$obPagination->getLimit());
 
         //RENDERIZA O ITEM
-        while($ObTestimony = $results->fetchObject(EntityTestimony::class))   
+        while($ObUser = $results->fetchObject(EntityUser::class))   
         {
-            //VIEW DE DEPOIMENTOS
-            $itens .= View::render('admin/modules/testimonies/item',[
-                'id'       => $ObTestimony->id,
-                'nome'     => $ObTestimony->nome,
-                'mensagem' => $ObTestimony->mensagem,
-                'data'     => date('d/m/Y H:i:s', strtotime($ObTestimony->data))
+            //VIEW DE USUÁRIOS
+            $itens .= View::render('admin/modules/users/item',[
+                'id'       => $ObUser->id,
+                'nome'     => $ObUser->nome,
+                'email' => $ObUser->email
             ]);
         }
 
@@ -49,21 +49,21 @@ class Testimony extends Page
     }
 
     /**
-     * Método responsável por renderizar a view de listagem de depoimentos
+     * Método responsável por renderizar a view de listagem de usuários
      * @param Request $_REQUEST
      * @return string
      */
-    public static function getTestimonies($request)
+    public static function getUsers($request)
     {
         //CONTEÚDO DA HOME
-        $content = View::render('admin/modules/testimonies/index', [
-            'itens'      => self::getTestimonyItems($request,$obPagination),
+        $content = View::render('admin/modules/users/index', [
+            'itens'      => self::getUserItems($request,$obPagination),
             'pagination' => parent::getPagination($request,$obPagination),
             'status'     => self::getStatus($request)
         ]);
 
         //RETORNA A PÁGINA COMPLETA
-        return parent ::getPanel('Depoimentos > Celerus', $content, 'testimonies');
+        return parent ::getPanel('Usuários > Celerus', $content, 'users');
     }
 
 
@@ -84,46 +84,66 @@ class Testimony extends Page
         switch ($queryParams['status'])
         {
             case 'created':
-                return Alert::getSuccess('Depoimento criado com sucesso!');
+                return Alert::getSuccess('Usuário criado com sucesso!');
                 break;
             case 'updated':
-                return Alert::getSuccess('Depoimento atualizado com sucesso!');
+                return Alert::getSuccess('Dados do Usuário atualizados com sucesso!');
                 break;
             case 'deleted':
-                return Alert::getSuccess('Depoimento excluído com sucesso!');
+                return Alert::getSuccess('Usuário excluído com sucesso!');
+                break;
+            case 'duplicated':
+                return Alert::getError('O E-mail digitado já está sendo utilizado por outro usuário.');
                 break;
         }
     }
 
     /**
-     * Método responsável por retornar o formulário de cadastro de um novo depoimento
+     * Método responsável por retornar o formulário de cadastro de um novo usuário
      * @param Request $request
      * @return string
      */
-    public static function getNewTestimony($request)
+    public static function getNewUser($request)
     {
        //CONTEÚDO DO FORMULÁRIO
-       $content = View::render('admin/modules/testimonies/form', [
-        'title'    => 'Cadastrar Depoimento',
+       $content = View::render('admin/modules/users/form', [
+        'title'    => 'Cadastrar usuário',
         'nome'     => '',
-        'mensagem' => '',
-        'status'   => ''
+        'email'    => '',
+        'status'   => self::getStatus($request)
     ]);
 
         //RETORNA A PÁGINA COMPLETA
-        return parent ::getPanel('Cadastrar depoimento', $content, 'testimonies');
+        return parent ::getPanel('Cadastrar usuário', $content, 'users');
     }
 
     /**
-     * Método responsável por cadastrar um depoimento no DB
+     * Método responsável por cadastrar um usuário no DB
      * @param Request $request
      * @return string
      */
-    public static function setNewTestimony($request)
+    public static function setNewUser($request)
     {
        //POST VARS
        $postVars = $request->getPostVars();
+       $nome  = $postVars['nome'] ?? '';
+       $email = $postVars['email'] ?? '';
+       $senha  = $postVars['senha'] ?? '';
+
+       //VALIDA O E-MAIL DO USUÁRIO
+       $ObUser = EntityUser::getUserByEmail($email);
+       if($ObUser instanceof EntityUser)
+       {
+        //REDIRECIONA O USUÁRIO
+        $request->getRouter()->redirect('/admin/users/new?status=duplicated');
+       }
+
        
+       echo "<pre>";
+       print_r($email);
+       echo "</pre>";
+       exit;   
+
        //NOVA INSTÂNCIA DE DEPOIMENTO
        $ObTestimony = new EntityTestimony;
        $ObTestimony->nome = $postVars['nome'] ?? '';
