@@ -43,7 +43,7 @@ $obRouter->GET('/admin/users/{id}/edit',[
     ],
     function($request,$id)
     {
-        return new Response(200,Admin\Testimony::getEditTestimony($request,$id));
+        return new Response(200,Admin\User::getEditUser($request,$id));
     }
 ]);
 
@@ -54,7 +54,7 @@ $obRouter->post('/admin/users/{id}/edit',[
     ],
     function($request,$id)
     {
-        return new Response(200,Admin\Testimony::setEditTestimony($request,$id));
+        return new Response(200,Admin\User::setEditUser($request,$id));
     }
 ]);
 
@@ -65,7 +65,7 @@ $obRouter->GET('/admin/users/{id}/delete',[
     ],
     function($request,$id)
     {
-        return new Response(200,Admin\Testimony::getDeleteTestimony($request,$id));
+        return new Response(200,Admin\User::getDeleteUser($request,$id));
     }
 ]);
 
@@ -76,7 +76,7 @@ $obRouter->post('/admin/users/{id}/delete',[
     ],
     function($request,$id)
     {
-        return new Response(200,Admin\Testimony::setDeleteTestimony($request,$id));
+        return new Response(200,Admin\User::setDeleteUser($request,$id));
     }
 ]);
 
