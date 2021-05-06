@@ -7,31 +7,24 @@ use \App\Model\Entity\Organization;
 
 class Home extends Page
 {
-
     /**
-    * Método responsável por retornar o conteúdo (view) da home
-    * @return string
-    */
+     * Método responsável por retornar o conteúdo (view) da nossa home
+     * @return string
+     */
     public static function getHome()
     {
         //ORGANIZAÇÃO
         $obOrganization = new Organization;
 
-
-        //RETORNA A VIEW DA HOME
+        //VIEW DA HOME
         $content = View::render('pages/home', [
-            'name'         => $obOrganization->name,
-            'description'  => $obOrganization->description,
-            'site'         => $obOrganization->site
-
+            'name' => $obOrganization->name
         ]);
-        
+
         //RETORNA A VIEW DA PÁGINA
-        return parent::getPage('Celerus', $content);
+        return parent::getPage('Home > WDEV', $content);
     }
-
-}
-
+} 
 
 
 ?>
