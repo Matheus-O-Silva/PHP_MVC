@@ -18,6 +18,27 @@ class Api
             'email'  => 'matheus@celerus.com'
         ];
     }
+
+    /**
+     * Método responsável por retornar os detalhes da paginação
+     * @param Request $request
+     * @param Pagination $obPagination
+     * @return array
+     */
+    protected static function getPagination($request,$obPagination)
+    {
+        //QUERY PARAMS
+        $queryParams = $request->getQueryParams();    
+
+        //PÁGINA
+        $pages = $obPagination->getPages();
+ 
+        //RETORNO 
+        return [
+            'paginaAtual' => isset($queryParams['page']) ? (int)$queryParams['page'] : 1,
+            'quantidadedePaginas' => !empty($pages) ? count($pages) : 1
+        ];
+    }
 }
 
 ?>
