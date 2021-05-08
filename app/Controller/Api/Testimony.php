@@ -23,7 +23,7 @@ class Testimony extends Api
         
         //PÁGINA ATUAL
         $queryParams = $request->getQueryParams();
-        $paginaAtual = $queryParams['page'] ?? 1;
+        $paginaAtual = $queryParams['page'] ?? 5;
         
         //INSTÂNCIA DE PAGINAÇÃO
         $obPagination = new Pagination($quantidadeTotal,$paginaAtual,3);
